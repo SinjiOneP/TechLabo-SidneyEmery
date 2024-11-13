@@ -1,0 +1,205 @@
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Container to center content */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Styling the sliders */
+input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Label styling */
+label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Section for the LED control */
+.led-control {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e9e9e9;
+    border-radius: 5px;
+}
+
+.led-control input {
+    margin-top: 10px;
+}
+
+/* Styling the Photoresistor section */
+.light-value {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.LEDxLV {
+    display: flex;
+    margin-left: 170px;
+    margin-right: 170px;
+}
+
+.toggleLED {
+    margin: auto;
+    height: 150px;
+    width: 710px;
+    background-color: rgb(233, 233, 233);
+    box-sizing: border-box;
+    padding: 15px;
+    margin-bottom: 50px;
+    border-radius: 50px;
+    text-align: center; /* Centering text and input */
+}
+
+.toggleLED input[type="checkbox"] {
+    margin-right: 10px; /* Space between checkbox and text */
+}
+
+.controlLED {
+    margin: auto;
+    height: 350px;
+    width: 1500px;
+    background-color: rgb(233, 233, 233);
+    box-sizing: border-box;
+    padding: 50px;
+    border-radius: 50px;
+}
+
+.lightValue {
+    margin: auto;
+    height: 150px;
+    width: 710px;
+    background-color: rgb(233, 233, 233);
+    box-sizing: border-box;
+    padding: 15px;
+    margin-bottom: 50px;
+    border-radius: 50px;
+    text-align: center; /* Centering text and input */
+}
+
+/* Label for sliders */
+.controlLED label {
+    font-size: 20px;
+}
+
+/* Style for range input elements */
+input[type="range"] {
+    width: 100%;
+    height: 10px;
+    -webkit-appearance: none; /* Remove default styling in Webkit browsers (Chrome, Safari) */
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Red slider styles */
+#red {
+    background: linear-gradient(to right, #ff0000, #ffcccc);
+}
+
+#red::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #ff0000;
+    border-radius: 5px;
+}
+
+#red::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -5px; /* Center the thumb */
+    background-color: #ff0000;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Green slider styles */
+#green {
+    background: linear-gradient(to right, #00ff00, #ccffcc);
+}
+
+#green::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #00ff00;
+    border-radius: 5px;
+}
+
+#green::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -5px; /* Center the thumb */
+    background-color: #00ff00;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Blue slider styles */
+#blue {
+    background: linear-gradient(to right, #0000ff, #ccccff);
+}
+
+#blue::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #0000ff;
+    border-radius: 5px;
+}
+
+#blue::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -5px; /* Center the thumb */
+    background-color: #0000ff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.graph-section {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#lightValueChart {
+    width: 100%;
+    height: 300px;
+}
+

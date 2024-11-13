@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LED Control Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <script>
+        function toggleLED() {
+            let state = document.getElementById("ledState").checked ? "ON" : "OFF";
+            fetch("/led", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({state: state})
+            });
+        }
+
+        function setRGB() {
+            let r = document.getElementById("red").value;
+            let g = document.getElementById("green").value;
+            let b = document.getElementById("blue").value;
+            fetch("/rgb", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({red: r, green: g, blue: b})
+            });
+        }
+
+        // Function to fetch light data periodically and update the page and chart
+        function fetchLightData() {
+            fetch('/light-data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('lightValue').textContent = "Current Light Value: " + data.light_data;
+
+                    // Add new data point to chart
+                    addDataToChart(data.light_data);
+                })
+                .catch(error => console.error('Error fetching light data:', error));
+        }
+
+        // Fetch light data every second
+        setInterval(fetchLightData, 1000);
+
+        // Set up the chart
+        let chart;
+        function initializeChart() {
+            const ctx = document.getElementById('lightValueChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Light Value Over Time',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Light Value'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to add data to the chart
+        function addDataToChart(lightValue) {
+            const now = new Date().toLocaleTimeString();
+            chart.data.labels.push(now);
+            chart.data.datasets[0].data.push(lightValue);
+
+            // Limit to the last 20 data points
+            if (chart.data.labels.length > 20) {
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
+            }
+
+            chart.update();
+        }
+
+        // Initialize the chart when the page loads
+        window.onload = initializeChart;
+    </script>
+</head>
+<body>
+    <h1>LED Control Dashboard</h1>
+
+    <div class="LEDxLV">
+        <!-- LED Control Section -->
+        <div class="toggleLED">
+            <label for="ledState"><h2>LED LIGHT ON/OFF</h2><br></label>
+            <input type="checkbox" id="ledState" onchange="toggleLED()"> Toggle LED
+        </div>
+
+        <!-- Light Value Section (Single display) -->
+        <div class="lightValue">
+            <h2>Photoresistor Light Value</h2>
+            <p id="lightValue">Current Light Value: {{ light_data }}</p> <!-- Display the initial light value -->
+        </div>
+    </div>
+
+    <!-- RGB LED Control Section -->
+    <div class="controlLED">
+        <label><h2>RGB LED Control:</h2></label><br>
+        Red <input type="range" id="red" min="0" max="255" onchange="setRGB()"><br>
+        Green <input type="range" id="green" min="0" max="255" onchange="setRGB()"><br>
+        Blue <input type="range" id="blue" min="0" max="255" onchange="setRGB()"><br>
+    </div>
+
+    <!-- Graph Section for Light Value -->
+    <div class="graph-section">
+        <h2>Light Value Over Time</h2>
+        <canvas id="lightValueChart"></canvas> <!-- Chart element -->
+    </div>
+</body>
+</html>
